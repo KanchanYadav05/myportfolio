@@ -1,0 +1,927 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Kanchan Yadav - Full Stack Developer</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet"/>
+    <style>
+      :root {
+        --primary: #667eea;
+        --primary-dark: #5568d9;
+        --secondary: #764ba2;
+        --gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        --gradient-hover: linear-gradient(135deg, #5568d9 0%, #653d91 100%);
+        --primary-light: #f0f2ff;
+        --text: #111827;
+        --text-muted: #6b7280;
+        --border: #e5e7eb;
+        --bg: #ffffff;
+        --bg2: #f9fafb;
+        --bg3: #f3f4f6;
+        --success: #059669;
+        --shadow-sm: 0 1px 3px rgba(102,126,234,.08), 0 1px 2px rgba(0,0,0,.04);
+        --shadow: 0 4px 16px rgba(102,126,234,.12);
+        --shadow-lg: 0 10px 40px rgba(102,126,234,.18);
+      }
+
+      *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+      html { scroll-behavior: smooth; }
+
+      body {
+        font-family: 'Plus Jakarta Sans', sans-serif;
+        color: var(--text);
+        background: var(--bg);
+        line-height: 1.6;
+        overflow-x: hidden;
+      }
+
+      .container { max-width: 1140px; margin: 0 auto; padding: 0 24px; }
+
+      /* ── HEADER ── */
+      header {
+        background: var(--gradient);
+        color: white;
+        padding: 5rem 0 4.5rem;
+        position: relative;
+        overflow: hidden;
+      }
+      header::before {
+        content: '';
+        position: absolute; inset: 0;
+        background:
+          radial-gradient(ellipse at 15% 50%, rgba(255,255,255,.1) 0%, transparent 55%),
+          radial-gradient(ellipse at 85% 20%, rgba(255,255,255,.07) 0%, transparent 50%);
+      }
+      header::after {
+        content: '';
+        position: absolute; bottom: 0; left: 0; right: 0;
+        height: 56px;
+        background: white;
+        clip-path: ellipse(55% 100% at 50% 100%);
+      }
+
+      .header-content {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 2.5rem;
+        position: relative; z-index: 2;
+      }
+
+      .hero-text h1 {
+        font-size: clamp(2.2rem, 4vw, 3.2rem);
+        font-weight: 800;
+        letter-spacing: -.03em;
+        margin-bottom: .4rem;
+        animation: slideInLeft .8s ease-out both;
+      }
+      .hero-text .subtitle {
+        font-size: 1.3rem;
+        font-weight: 600;
+        opacity: .92;
+        margin-bottom: .8rem;
+        animation: slideInLeft .8s ease-out .2s both;
+        display: flex; align-items: center; gap: .5rem;
+      }
+      .subtitle-dot {
+        width: 8px; height: 8px;
+        background: rgba(255,255,255,.7);
+        border-radius: 50%; display: inline-block;
+        animation: pulse 2s infinite;
+      }
+      @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.3} }
+      .hero-text .description {
+        font-size: 1rem;
+        opacity: .85;
+        max-width: 480px;
+        line-height: 1.7;
+        animation: slideInLeft .8s ease-out .4s both;
+      }
+      .hero-badges {
+        display: flex; flex-wrap: wrap; gap: .6rem; margin-top: 1.4rem;
+        animation: slideInLeft .8s ease-out .6s both;
+      }
+      .hero-badge {
+        background: rgba(255,255,255,.18);
+        border: 1px solid rgba(255,255,255,.3);
+        padding: .3rem .9rem; border-radius: 20px;
+        font-size: .78rem; font-weight: 600;
+        backdrop-filter: blur(4px);
+      }
+
+      /* Profile Image */
+      .profile-image {
+        width: 190px; height: 190px;
+        border-radius: 50%; overflow: hidden;
+        border: 5px solid rgba(255,255,255,.35);
+        box-shadow: 0 0 0 8px rgba(255,255,255,.12), 0 20px 40px rgba(0,0,0,.2);
+        background: rgba(255,255,255,.1);
+        flex-shrink: 0;
+        animation: fadeIn 1s ease-out both;
+      }
+      .profile-image img { width:100%; height:100%; object-fit:cover; display:block; }
+
+      /* ── NAV ── */
+      nav {
+        background: rgba(255,255,255,.97);
+        backdrop-filter: blur(10px);
+        padding: .9rem 0;
+        position: sticky; top: 0; z-index: 200;
+        box-shadow: 0 2px 20px rgba(102,126,234,.12);
+      }
+      .nav-content {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: .4rem;
+      }
+      .nav-link {
+        text-decoration: none;
+        color: #444;
+        font-weight: 600;
+        font-size: .88rem;
+        padding: .5rem 1.2rem;
+        border-radius: 25px;
+        transition: all .25s;
+      }
+      .nav-link:hover, .nav-link.active {
+        background: var(--gradient);
+        color: white;
+        transform: translateY(-1px);
+        box-shadow: 0 4px 12px rgba(102,126,234,.3);
+      }
+
+      /* ── SECTIONS ── */
+      section { padding: 5rem 0; }
+      .section-title {
+        text-align: center;
+        font-size: clamp(1.8rem, 3vw, 2.4rem);
+        font-weight: 800;
+        margin-bottom: .6rem;
+        letter-spacing: -.02em;
+        color: var(--text);
+      }
+      .section-title::after {
+        content: '';
+        display: block;
+        width: 60px; height: 3px;
+        background: var(--gradient);
+        margin: .8rem auto 0;
+        border-radius: 2px;
+      }
+      .section-subtitle {
+        text-align: center;
+        color: var(--text-muted);
+        font-size: .95rem;
+        margin-top: .8rem;
+        margin-bottom: 3rem;
+      }
+
+      /* ── ABOUT ── */
+      #about { background: var(--bg); }
+      .about-content {
+        display: grid;
+        grid-template-columns: 1fr 2fr;
+        gap: 4rem;
+        align-items: start;
+      }
+      .about-left { position: sticky; top: 80px; }
+      .about-card {
+        background: var(--bg2);
+        border: 1px solid var(--border);
+        border-radius: 16px;
+        padding: 2rem;
+        text-align: center;
+        box-shadow: var(--shadow-sm);
+      }
+      .about-avatar {
+        width: 100px; height: 100px;
+        border-radius: 50%;
+        background: var(--primary-light);
+        border: 3px solid var(--primary);
+        margin: 0 auto 1rem;
+        display: flex; align-items: center; justify-content: center;
+        font-size: 2.5rem; color: var(--primary);
+        overflow: hidden;
+      }
+      .about-avatar img { width:100%; height:100%; object-fit:cover; border-radius:50%; }
+      .about-name { font-weight: 800; font-size: 1.1rem; margin-bottom: .4rem; }
+      .about-role {
+        font-size: .82rem; font-weight: 700; color: var(--primary);
+        background: var(--primary-light);
+        padding: .3rem .9rem; border-radius: 20px;
+        display: inline-block; margin-bottom: 1.2rem;
+      }
+      .about-meta { font-size: .82rem; color: var(--text-muted); line-height: 2; }
+      .about-meta span { display: flex; align-items: center; gap: .5rem; justify-content: center; }
+      .about-meta i { color: var(--primary); width: 14px; }
+
+      .about-text h3 { font-size: 1.4rem; font-weight: 800; margin-bottom: 1.2rem; letter-spacing: -.02em; }
+      .about-text p { color: var(--text-muted); line-height: 1.8; margin-bottom: 1rem; font-size: .95rem; }
+
+      /* Skills grid */
+      .skills-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(155px, 1fr));
+        gap: 1rem;
+        margin-top: 2rem;
+      }
+      .skill-card {
+        background: white;
+        border: 2px solid transparent;
+        padding: 1.4rem 1rem;
+        border-radius: 12px;
+        box-shadow: 0 4px 14px rgba(0,0,0,.07);
+        text-align: center;
+        transition: all .25s;
+        cursor: default;
+      }
+      .skill-card:hover {
+        transform: translateY(-5px);
+        border-color: var(--primary);
+        box-shadow: 0 10px 30px rgba(102,126,234,.2);
+      }
+      .skill-icon { font-size: 2.2rem; margin-bottom: .7rem; display: block; }
+      .skill-card h4 { font-size: .88rem; font-weight: 700; margin-bottom: .2rem; color: var(--text); }
+      .skill-card p { font-size: .74rem; color: var(--text-muted); }
+
+      /* MERN row */
+      .mern-row {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: .8rem;
+        margin-top: 2.5rem;
+        background: var(--primary-light);
+        border: 1px solid rgba(102,126,234,.2);
+        border-radius: 12px;
+        padding: 1.4rem;
+        flex-wrap: wrap;
+      }
+      .mern-item {
+        display: flex; align-items: center; gap: .5rem;
+        background: white;
+        border: 1.5px solid rgba(102,126,234,.2);
+        border-radius: 8px; padding: .5rem 1.1rem;
+        font-size: .85rem; font-weight: 700;
+        box-shadow: var(--shadow-sm);
+      }
+      .mern-item i { font-size: 1.1rem; }
+      .mern-arrow { color: var(--primary); font-size: 1rem; font-weight: 700; }
+
+      /* ── PROJECTS ── */
+      #projects { background: #f8f9fa; }
+      .projects-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(330px, 1fr));
+        gap: 1.8rem;
+      }
+      .project-card {
+        background: white;
+        border-radius: 15px;
+        overflow: hidden;
+        box-shadow: 0 8px 24px rgba(0,0,0,.08);
+        transition: all .3s;
+        position: relative;
+        border: 1px solid var(--border);
+      }
+      .project-card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 20px 40px rgba(102,126,234,.18);
+        border-color: rgba(102,126,234,.3);
+      }
+      .project-image {
+        height: 170px;
+        background: var(--gradient);
+        display: flex; align-items: center; justify-content: center;
+        color: white; font-size: 3rem;
+        position: relative; overflow: hidden;
+      }
+      .project-image::before {
+        content: '';
+        position: absolute; inset: 0;
+        background: repeating-linear-gradient(
+          45deg,
+          rgba(255,255,255,.04) 0px,
+          rgba(255,255,255,.04) 1px,
+          transparent 1px, transparent 20px
+        );
+      }
+      .project-badge {
+        position: absolute; top: .8rem; right: .8rem;
+        font-size: .68rem; font-weight: 700; text-transform: uppercase;
+        letter-spacing: .05em; padding: .25rem .75rem; border-radius: 20px;
+        background: rgba(255,255,255,.25);
+        border: 1px solid rgba(255,255,255,.4);
+        color: white;
+        backdrop-filter: blur(4px);
+      }
+      .project-content { padding: 1.5rem; }
+      .project-title { font-size: 1rem; font-weight: 800; margin-bottom: .5rem; color: var(--text); }
+      .project-desc { font-size: .85rem; color: var(--text-muted); line-height: 1.65; margin-bottom: 1rem; }
+      .project-tech { display: flex; flex-wrap: wrap; gap: .4rem; margin-bottom: 1.1rem; }
+      .tech-tag {
+        background: #f0f2ff;
+        color: var(--primary);
+        padding: .22rem .75rem;
+        border-radius: 20px;
+        font-size: .73rem;
+        font-weight: 700;
+        border: 1px solid rgba(102,126,234,.2);
+      }
+      .project-links { display: flex; gap: .8rem; }
+      .project-link {
+        padding: .5rem 1.1rem; border-radius: 7px;
+        text-decoration: none; font-weight: 700; font-size: .82rem;
+        transition: all .25s;
+      }
+      .btn-primary { background: var(--gradient); color: white; }
+      .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(102,126,234,.4); }
+      .btn-secondary {
+        background: transparent; color: var(--primary);
+        border: 2px solid var(--primary);
+      }
+      .btn-secondary:hover {
+        background: var(--primary-light);
+        transform: translateY(-2px);
+      }
+
+      /* ── CONTACT ── */
+      #contact { background: var(--bg); }
+      .contact-content {
+        display: grid;
+        grid-template-columns: 1fr 1.1fr;
+        gap: 2.5rem;
+        align-items: start;
+      }
+      .contact-info {
+        background: white;
+        border: 1px solid var(--border);
+        padding: 2rem;
+        border-radius: 15px;
+        box-shadow: var(--shadow);
+      }
+      .contact-info h3 { font-size: 1.2rem; font-weight: 800; margin-bottom: .4rem; }
+      .contact-info > p { font-size: .88rem; color: var(--text-muted); margin-bottom: 1.5rem; }
+      .contact-item {
+        display: flex; align-items: center; gap: 1rem;
+        padding: .9rem;
+        border-radius: 10px;
+        transition: all .2s;
+        margin-bottom: .5rem;
+      }
+      .contact-item:hover { background: var(--bg2); transform: translateX(4px); }
+      .c-icon-wrap {
+        width: 42px; height: 42px; flex-shrink: 0;
+        background: var(--primary-light); color: var(--primary);
+        border-radius: 10px;
+        display: flex; align-items: center; justify-content: center;
+        font-size: 1.05rem;
+      }
+      .c-label { font-size: .72rem; font-weight: 700; text-transform: uppercase; letter-spacing: .05em; color: var(--text-muted); margin-bottom: .1rem; }
+      .c-value { font-size: .9rem; font-weight: 500; color: var(--text); }
+
+      .social-links {
+        display: flex; gap: .6rem; margin-top: 1.5rem; padding-top: 1.5rem;
+        border-top: 1px solid var(--border);
+      }
+      .social-link {
+        width: 42px; height: 42px;
+        background: var(--bg2); border: 1px solid var(--border);
+        border-radius: 10px; color: var(--text-muted);
+        display: inline-flex; align-items: center; justify-content: center;
+        text-decoration: none; font-size: 1.1rem;
+        transition: all .25s;
+      }
+      .social-link:hover {
+        background: var(--gradient); color: white;
+        border-color: transparent;
+        transform: translateY(-3px);
+        box-shadow: 0 5px 14px rgba(102,126,234,.35);
+      }
+
+      .contact-form {
+        background: white;
+        border: 1px solid var(--border);
+        padding: 2rem;
+        border-radius: 15px;
+        box-shadow: var(--shadow);
+      }
+      .form-group { margin-bottom: 1.2rem; }
+      .form-group label {
+        display: block; margin-bottom: .4rem;
+        font-size: .78rem; font-weight: 700; text-transform: uppercase;
+        letter-spacing: .05em; color: var(--text-muted);
+      }
+      .form-group input, .form-group textarea {
+        width: 100%;
+        padding: .75rem 1rem;
+        border: 2px solid var(--border);
+        border-radius: 8px;
+        font-size: .92rem;
+        font-family: 'Plus Jakarta Sans', sans-serif;
+        color: var(--text);
+        background: var(--bg2);
+        transition: all .2s;
+        resize: vertical;
+      }
+      .form-group input:focus, .form-group textarea:focus {
+        outline: none;
+        border-color: var(--primary);
+        background: white;
+        box-shadow: 0 0 0 3px rgba(102,126,234,.1);
+      }
+      .form-group input::placeholder, .form-group textarea::placeholder { color: #9ca3af; }
+      .submit-btn {
+        background: var(--gradient); color: white;
+        width: 100%; padding: .85rem;
+        border: none; border-radius: 8px;
+        font-size: .95rem; font-weight: 700;
+        font-family: 'Plus Jakarta Sans', sans-serif;
+        cursor: pointer; transition: all .25s;
+      }
+      .submit-btn:hover {
+        background: var(--gradient-hover);
+        transform: translateY(-2px);
+        box-shadow: 0 6px 18px rgba(102,126,234,.4);
+      }
+
+      /* ── FOOTER ── */
+      footer {
+        background: #2c3e50;
+        color: white;
+        text-align: center;
+        padding: 2.5rem 0;
+      }
+      .footer-social {
+        display: flex; justify-content: center; gap: .8rem;
+        margin-bottom: 1.2rem;
+      }
+      .footer-social a {
+        width: 46px; height: 46px;
+        background: rgba(255,255,255,.1);
+        border: 1px solid rgba(255,255,255,.15);
+        border-radius: 50%;
+        display: inline-flex; align-items: center; justify-content: center;
+        color: rgba(255,255,255,.75); font-size: 1.1rem;
+        text-decoration: none; transition: all .25s;
+      }
+      .footer-social a:hover {
+        background: var(--gradient);
+        color: white; border-color: transparent;
+        transform: translateY(-3px);
+        box-shadow: 0 5px 14px rgba(102,126,234,.4);
+      }
+      footer p { font-size: .83rem; color: rgba(255,255,255,.5); }
+
+      /* ── ANIMATIONS ── */
+      @keyframes slideInLeft {
+        from { opacity: 0; transform: translateX(-28px); }
+        to { opacity: 1; transform: translateX(0); }
+      }
+      @keyframes fadeIn {
+        from { opacity: 0; transform: scale(.95); }
+        to { opacity: 1; transform: scale(1); }
+      }
+      .fade-in { opacity: 0; transform: translateY(24px); transition: all .6s cubic-bezier(.22,1,.36,1); }
+      .fade-in.visible { opacity: 1; transform: none; }
+
+      /* ── RESPONSIVE ── */
+      @media (max-width: 900px) {
+        header { padding: 4rem 0 3.5rem; }
+        .about-content { grid-template-columns: 1fr; }
+        .about-left { position: static; }
+        .contact-content { grid-template-columns: 1fr; }
+        .projects-grid { grid-template-columns: 1fr; }
+        .header-content { flex-direction: column; text-align: center; }
+        .hero-badges { justify-content: center; }
+      }
+      @media (max-width: 540px) {
+        section { padding: 3.5rem 0; }
+        .skills-grid { grid-template-columns: repeat(2, 1fr); }
+        .hero-text h1 { font-size: 2rem; }
+        .mern-row { gap: .5rem; }
+      }
+    </style>
+  </head>
+  <body>
+
+    <!-- HEADER -->
+    <header>
+      <div class="container">
+        <div class="header-content">
+          <div class="hero-text">
+            <h1>Kanchan Yadav</h1>
+            <p class="subtitle">
+              <span class="subtitle-dot"></span>
+              Full Stack Developer
+            </p>
+            <p class="description">
+              Building complete web applications — from RESTful APIs and databases to polished, responsive user interfaces using the MERN Stack.
+            </p>
+            <div class="hero-badges">
+              <span class="hero-badge"><i class="fab fa-react"></i> React.js</span>
+              <span class="hero-badge"><i class="fab fa-node-js"></i> Node.js</span>
+              <span class="hero-badge"><i class="fas fa-database"></i> MongoDB</span>
+              <span class="hero-badge">✦ Open to Work</span>
+            </div>
+          </div>
+          <div class="profile-image">
+            <img src="image.jpg" alt="Kanchan Yadav" />
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- NAV -->
+    <nav>
+      <div class="container">
+        <div class="nav-content">
+          <a href="#about" class="nav-link">About</a>
+          <a href="#projects" class="nav-link">Projects</a>
+          <a href="#contact" class="nav-link">Contact</a>
+        </div>
+      </div>
+    </nav>
+
+    <!-- ABOUT -->
+    <section id="about">
+      <div class="container">
+        <h2 class="section-title fade-in">About Me</h2>
+        <p class="section-subtitle fade-in">Full Stack Developer with hands-on experience in the MERN Stack</p>
+
+        <div class="about-content fade-in">
+          <div class="about-left">
+            <div class="about-card">
+              <div class="about-avatar">
+                <img src="image.jpg" alt="Kanchan Yadav"
+                  onerror="this.style.display='none'; this.parentElement.innerHTML='<i class=\'fas fa-user\'></i>'"/>
+              </div>
+              <div class="about-name">Kanchan Yadav</div>
+              <div class="about-role">Full Stack Developer</div>
+              <div class="about-meta">
+                <span><i class="fas fa-graduation-cap"></i> B.Tech (IT) — DDU Gorakhpur</span>
+                <span><i class="fas fa-map-marker-alt"></i> Noida, India</span>
+                <span><i class="fas fa-envelope"></i> kanchanyadav200319@gmail.com</span>
+                <span style="color:var(--success);font-weight:700;"><i class="fas fa-circle" style="font-size:.45rem;color:var(--success)"></i> Open to Opportunities</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="about-text">
+            <h3>Hello! I'm Kanchan Yadav</h3>
+            <p>
+              I'm a Full Stack Developer specializing in the MERN Stack — MongoDB, Express.js, React.js, and Node.js. I graduated with a B.Tech in Information Technology from Deen Dayal Upadhyay Gorakhpur University.
+            </p>
+            <p>
+              I started my journey as a Frontend Developer and expanded my skills to cover the entire web stack — building REST APIs, designing MongoDB schemas, implementing JWT authentication, and crafting responsive React interfaces.
+            </p>
+            <p>
+              I'm hardworking, honest, and a good team player. I thrive both independently and in collaborative environments and am eager to contribute my skills to make a positive impact.
+            </p>
+
+            <div class="skills-grid">
+              <div class="skill-card">
+                <span class="skill-icon"><i class="fab fa-html5" style="color:#e34f26"></i></span>
+                <h4>HTML5</h4>
+                <p>Semantic markup</p>
+              </div>
+              <div class="skill-card">
+                <span class="skill-icon"><i class="fab fa-css3-alt" style="color:#1572b6"></i></span>
+                <h4>CSS3</h4>
+                <p>Styling & animations</p>
+              </div>
+              <div class="skill-card">
+                <span class="skill-icon"><i class="fab fa-js" style="color:#e5b800"></i></span>
+                <h4>JavaScript</h4>
+                <p>ES6+, DOM & async</p>
+              </div>
+              <div class="skill-card">
+                <span class="skill-icon"><i class="fab fa-react" style="color:#61dafb"></i></span>
+                <h4>React.js</h4>
+                <p>Component-based UI</p>
+              </div>
+              <div class="skill-card">
+                <span class="skill-icon"><i class="fab fa-node-js" style="color:#339933"></i></span>
+                <h4>Node.js</h4>
+                <p>Server-side JS</p>
+              </div>
+              <div class="skill-card">
+                <span class="skill-icon"><i class="fas fa-server" style="color:var(--primary)"></i></span>
+                <h4>Express.js</h4>
+                <p>REST API development</p>
+              </div>
+              <div class="skill-card">
+                <span class="skill-icon"><i class="fas fa-database" style="color:#4db33d"></i></span>
+                <h4>MongoDB</h4>
+                <p>NoSQL database</p>
+              </div>
+              <!-- <div class="skill-card">
+                <span class="skill-icon"><i class="fas fa-key" style="color:var(--secondary)"></i></span>
+                <h4>JWT Auth</h4>
+                <p>Secure authentication</p>
+              </div> -->
+              <div class="skill-card">
+                <span class="skill-icon"><i class="fab fa-git-alt" style="color:#f05033"></i></span>
+                <h4>Git & GitHub</h4>
+                <p>Version control</p>
+              </div>
+              <div class="skill-card">
+                <span class="skill-icon"><i class="fas fa-mobile-alt" style="color:var(--primary)"></i></span>
+                <h4>Responsive</h4>
+                <p>Mobile-first design</p>
+              </div>
+            </div>
+
+            <div class="mern-row">
+              <div class="mern-item" style="color:#4db33d"><i class="fas fa-leaf"></i> MongoDB</div>
+              <span class="mern-arrow">→</span>
+              <div class="mern-item" style="color:#555"><i class="fas fa-server"></i> Express</div>
+              <span class="mern-arrow">→</span>
+              <div class="mern-item" style="color:#61dafb"><i class="fab fa-react"></i> React</div>
+              <span class="mern-arrow">→</span>
+              <div class="mern-item" style="color:#339933"><i class="fab fa-node-js"></i> Node.js</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROJECTS -->
+    <section id="projects">
+      <div class="container">
+        <h2 class="section-title fade-in">Featured Projects</h2>
+        <p class="section-subtitle fade-in">Full stack applications built and deployed with real-world functionality</p>
+
+        <div class="projects-grid fade-in">
+
+          <div class="project-card">
+            <div class="project-image">
+              <i class="fas fa-car"></i>
+              <span class="project-badge">Full Stack</span>
+            </div>
+            <div class="project-content">
+              <h3 class="project-title">Car Rental & Booking Website</h3>
+              <p class="project-desc">
+                Built a responsive car rental and booking website using HTML, CSS, JavaScript, Node.js, and MongoDB with booking and vehicle management features.
+              </p>
+              <div class="project-tech">
+                <span class="tech-tag">Html</span>
+                  <span class="tech-tag">CSS</span>
+                 <span class="tech-tag">JavaScript</span>
+                <span class="tech-tag">Node.js</span>
+                <span class="tech-tag">Express.js</span>
+                <span class="tech-tag">MongoDB</span>
+              </div>
+              <div class="project-links">
+                <a href="https://firebrick-aardvark-672999.hostingersite.com/index.html" target="_blank" class="project-link btn-primary">Live Demo</a>
+                <a href="#" target="_blank" class="project-link btn-secondary"><i class="fab fa-github"></i> GitHub</a>
+              </div>
+            </div>
+          </div>
+
+               <div class="project-card">
+            <div class="project-image">
+              <i class="fas fa-laptop-code"></i>
+              <span class="project-badge">★ Featured</span>
+            </div>
+            <div class="project-content">
+              <h3 class="project-title">DW2 Technologies - Modern Full Stack Company Website</h3>
+              <p class="project-desc">
+                Developed a responsive full-stack company website using HTML, CSS, JavaScript, Node.js, and MongoDB with modern UI and backend integration.
+              </p>
+              <div class="project-tech">
+                <span class="tech-tag">React</span>
+                <span class="tech-tag">Node.js</span>
+                <span class="tech-tag">MongoDB</span>
+                <span class="tech-tag">Tailwind CSS</span>
+              </div>
+              <div class="project-links">
+                <a href="https://darkorange-curlew-491185.hostingersite.com/index.html" target="_blank" class="project-link btn-primary">Live Demo</a>
+                <a href="#" target="_blank" class="project-link btn-secondary"><i class="fab fa-github"></i> GitHub</a>
+              </div>
+            </div>
+          </div>
+
+
+          <div class="project-card">
+            <div class="project-image">
+              <i class="fas fa-utensils"></i>
+              <span class="project-badge">★ Featured</span>
+            </div>
+            <div class="project-content">
+              <h3 class="project-title">Foodie-Express — Food Ordering App</h3>
+              <p class="project-desc">
+                Full stack food ordering web app — users can browse menu categories, add items to cart, and place orders. React frontend with Node.js + MongoDB backend.
+              </p>
+              <div class="project-tech">
+                <span class="tech-tag">React</span>
+                <span class="tech-tag">Node.js</span>
+                <span class="tech-tag">MongoDB</span>
+                <span class="tech-tag">Tailwind CSS</span>
+              </div>
+              <div class="project-links">
+                <a href="https://kanchanyadav05.github.io/Foodie-Express/" target="_blank" class="project-link btn-primary">Live Demo</a>
+                <a href="https://github.com/kanchanyadav05/Foodie-Express" target="_blank" class="project-link btn-secondary"><i class="fab fa-github"></i> GitHub</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="project-card">
+            <div class="project-image">
+              <i class="fas fa-tasks"></i>
+              <span class="project-badge">Full Stack</span>
+            </div>
+            <div class="project-content">
+              <h3 class="project-title">Smart Task Management Dashboard</h3>
+              <p class="project-desc">
+                Full stack task manager with REST API on Express.js, MongoDB for data persistence, task categorization, progress tracking, and dark mode.
+              </p>
+              <div class="project-tech">
+                <span class="tech-tag">Node.js</span>
+                <span class="tech-tag">Express.js</span>
+                <span class="tech-tag">MongoDB</span>
+                <span class="tech-tag">JavaScript</span>
+              </div>
+              <div class="project-links">
+                <a href="https://kanchanyadav05.github.io/Smart-Task-Management-Dashboard-/" target="_blank" class="project-link btn-primary">Live Demo</a>
+                <a href="https://github.com/kanchanyadav05/Smart-Task-Management-Dashboard-" target="_blank" class="project-link btn-secondary"><i class="fab fa-github"></i> GitHub</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="project-card">
+            <div class="project-image">
+              <i class="fas fa-store"></i>
+              <span class="project-badge">Full Stack</span>
+            </div>
+            <div class="project-content">
+              <h3 class="project-title">Tool Store — E-Commerce Platform</h3>
+              <p class="project-desc">
+                Full stack e-commerce platform with product listings, cart, JWT user authentication, and order history — backed by Node.js + MongoDB API.
+              </p>
+              <div class="project-tech">
+                <span class="tech-tag">React.js</span>
+                <span class="tech-tag">Node.js</span>
+                <span class="tech-tag">MongoDB</span>
+                <span class="tech-tag">JWT Auth</span>
+                <span class="tech-tag">Tailwind CSS</span>
+              </div>
+              <div class="project-links">
+                <a href="https://kanchanyadav05.github.io/Tool-Store/" target="_blank" class="project-link btn-primary">Live Demo</a>
+                <a href="https://github.com/kanchanyadav05/Tool-Store" target="_blank" class="project-link btn-secondary"><i class="fab fa-github"></i> GitHub</a>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact">
+      <div class="container">
+        <h2 class="section-title fade-in">Get In Touch</h2>
+        <p class="section-subtitle fade-in">I'm actively looking for full-time opportunities. Let's connect!</p>
+
+        <div class="contact-content fade-in">
+          <div class="contact-info">
+            <h3>Let's Connect!</h3>
+            <p>Open to full-time roles, freelance projects, and collaborations.</p>
+
+            <div class="contact-item">
+              <div class="c-icon-wrap"><i class="fas fa-envelope"></i></div>
+              <div>
+                <div class="c-label">Email</div>
+                <div class="c-value">kanchanyadav200319@gmail.com</div>
+              </div>
+            </div>
+            <div class="contact-item">
+              <div class="c-icon-wrap"><i class="fas fa-phone"></i></div>
+              <div>
+                <div class="c-label">Phone</div>
+                <div class="c-value">+91 74089 79130</div>
+              </div>
+            </div>
+            <div class="contact-item">
+              <div class="c-icon-wrap"><i class="fas fa-map-marker-alt"></i></div>
+              <div>
+                <div class="c-label">Location</div>
+                <div class="c-value">Noida, Uttar Pradesh</div>
+              </div>
+            </div>
+            <div class="contact-item">
+              <div class="c-icon-wrap" style="background:#ecfdf5;color:var(--success)"><i class="fas fa-briefcase"></i></div>
+              <div>
+                <div class="c-label">Status</div>
+                <div class="c-value" style="color:var(--success);font-weight:700;">✦ Open to Opportunities</div>
+              </div>
+            </div>
+
+            <div class="social-links">
+              <a href="https://github.com/kanchanyadav05" target="_blank" class="social-link"><i class="fab fa-github"></i></a>
+              <a href="https://www.linkedin.com/in/kanchan-yadav-178657281?utm_source=share_via&utm_content=profile&utm_medium=member_android" class="social-link"><i class="fab fa-linkedin"></i></a>
+              <a href="https://x.com/Kanchan67142766" class="social-link"><i class="fab fa-twitter"></i></a>
+              <a href="https://codepen.io/pen" class="social-link"><i class="fab fa-codepen"></i></a>
+            </div>
+          </div>
+
+          <form class="contact-form" id="contactForm">
+            <div class="form-group">
+              <label for="name">Name</label>
+              <input type="text" id="name" name="name" placeholder="Your full name" required />
+            </div>
+            <div class="form-group">
+              <label for="email">Email</label>
+              <input type="email" id="email" name="email" placeholder="your@email.com" required />
+            </div>
+            <div class="form-group">
+              <label for="subject">Subject</label>
+              <input type="text" id="subject" name="subject" placeholder="Job opportunity / Project collaboration" />
+            </div>
+            <div class="form-group">
+              <label for="message">Message</label>
+              <textarea id="message" name="message" rows="5" placeholder="Tell me about the role or project..." required></textarea>
+            </div>
+            <button type="submit" class="submit-btn">
+              <i class="fas fa-paper-plane"></i> &nbsp;Send Message
+            </button>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+      <div class="container">
+        <div class="footer-social">
+          <a href="https://github.com/kanchanyadav05" target="_blank"><i class="fab fa-github"></i></a>
+          <a href="https://www.linkedin.com/in/kanchan-yadav-178657281?utm_source=share_via&utm_content=profile&utm_medium=member_android"><i class="fab fa-linkedin"></i></a>
+          <a href="https://x.com/Kanchan67142766"><i class="fab fa-twitter"></i></a>
+          <a href="https://codepen.io/pen"><i class="fab fa-codepen"></i></a>
+        </div>
+        <p>&copy; 2026 Kanchan Yadav — Full Stack Developer (MERN). All rights reserved.</p>
+      </div>
+    </footer>
+
+    <script>
+      // Smooth scrolling
+      document.querySelectorAll('a[href^="#"]').forEach(link => {
+        link.addEventListener('click', function(e) {
+          const href = this.getAttribute('href');
+          if (href === '#') return;
+          e.preventDefault();
+          document.querySelector(href)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        });
+      });
+
+      // Scroll reveal
+      const observer = new IntersectionObserver(entries => {
+        entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+      }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+      document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+      // Active nav highlight
+      window.addEventListener('scroll', () => {
+        const sections = document.querySelectorAll('section[id]');
+        const navLinks = document.querySelectorAll('.nav-link');
+        let current = '';
+        sections.forEach(s => { if (window.scrollY >= s.offsetTop - 120) current = s.id; });
+        navLinks.forEach(l => l.classList.toggle('active', l.getAttribute('href') === '#' + current));
+      });
+
+      // Skill card hover
+      document.querySelectorAll('.skill-card').forEach(card => {
+        card.addEventListener('mouseenter', function() { this.style.transform = 'translateY(-5px) scale(1.02)'; });
+        card.addEventListener('mouseleave', function() { this.style.transform = ''; });
+      });
+
+      // Typing effect on h1
+      window.addEventListener('load', () => {
+        const h1 = document.querySelector('.hero-text h1');
+        const text = h1.textContent;
+        h1.textContent = '';
+        let i = 0;
+        const type = () => { if (i < text.length) { h1.textContent += text[i++]; setTimeout(type, 90); } };
+        type();
+      });
+
+      // Form submit
+      document.getElementById('contactForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const btn = this.querySelector('.submit-btn');
+        btn.innerHTML = '<i class="fas fa-check"></i> &nbsp;Message Sent!';
+        btn.style.background = 'linear-gradient(135deg, #059669, #047857)';
+        setTimeout(() => {
+          this.reset();
+          btn.innerHTML = '<i class="fas fa-paper-plane"></i> &nbsp;Send Message';
+          btn.style.background = '';
+        }, 3000);
+      });
+    </script>
+  </body>
+</html>
